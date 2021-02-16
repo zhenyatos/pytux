@@ -35,6 +35,11 @@ def __add_args_log(subparsers_base):
 
 
 def parse_args():
+    """
+    Parses command line arguments.
+
+    :return: Namespace object of argument.
+    """
     parser = argparse.ArgumentParser(prog="pytux",
                                      formatter_class=__CustomFormatter)
 

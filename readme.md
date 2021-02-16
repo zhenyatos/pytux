@@ -1,4 +1,4 @@
-# PytuX DSL
+# PytuX DSL (Windows/Linux)
 
 ## Requirements
 - [*python*](https://www.python.org/downloads/) >= 3.6

@@ -27,6 +27,12 @@ __tasks_log = {
 
 
 def main(argv):
+    """
+    Entry point of `pytux log` command.
+
+    :param argv: command line arguments passed to tasks.
+    :return: 0 on success, -1 on error.
+    """
     try:
         msg = __tasks_log[argv.task](argv)
         if msg is not None:
