@@ -55,7 +55,6 @@ def main():
     code = __commands[argv.command](argv)
     __logger.info("exiting...")
     const.LOG_FILE.close()
-    return code
 
 
 if __name__ == "__main__":
