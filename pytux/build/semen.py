@@ -29,12 +29,12 @@ def p_error(p):
 
 start = 'program'
 
-# Building Semky
-Semka = yacc.yacc(debug=False)
+# Building Semena
+Semen = yacc.yacc(debug=False)
 
 
 def parse(file):
     global parsed_file_dir
     parsed_file_dir = path.dirname(path.abspath(file.name))
     data = file.read()
-    return Semka.parse(data)
+    return Semen.parse(data)

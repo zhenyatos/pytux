@@ -1,5 +1,5 @@
 import pytux.log as log
-from pytux.build.semka import parse
+from pytux.build.semen import parse
 from pytux.build.lexa import Lexa
 from os import path
 
