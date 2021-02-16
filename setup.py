@@ -6,7 +6,7 @@ if __name__ == "__main__":
           version="0.1.0",
           # TODO: check required version
           python_requires=">=3.6",
-          install_requires=["wheel"],
+          install_requires=["wheel", "ply"],
           packages=find_packages(include=["pytux", "pytux.*"]),
           package_dir={"pytux": "pytux"},
           entry_points={

@@ -5,6 +5,7 @@ import pytux.const as const
 
 from pytux.build.__main__ import main as command_build
 from pytux.log.__main__ import main as command_log
+from pytux.build.semka import parse
 
 import os
 import sys
@@ -55,6 +56,12 @@ def main():
     code = __commands[argv.command](argv)
     __logger.info("exiting...")
     const.LOG_FILE.close()
+
+    # Parse
+    source_file_name = argv.file.name
+    result_file_name = os.path.splitext(source_file_name)[0] + ".rpy"
+    with open(result_file_name, "w") as result_file:
+        result_file.write(parse(argv.file))
     return code
 
 

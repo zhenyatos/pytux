@@ -1,0 +1,3 @@
+# Include test
+include 'header.rpy'
+include 'body.rpy'
