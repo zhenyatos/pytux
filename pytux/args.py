@@ -12,6 +12,11 @@ def __add_args_build(subparsers_base):
                                         formatter_class=__CustomFormatter,
                                         help="works with building renpy project.\n")
 
+    parser.add_argument("-f", "--file", metavar="",
+                        type=argparse.FileType("r"),
+                        dest="file",
+                        default=None)
+
 
 def __add_args_log(subparsers_base):
     parser = subparsers_base.add_parser("log",
