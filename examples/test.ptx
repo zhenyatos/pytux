@@ -1,3 +1,4 @@
-# Include test
+# Testing 'include' macro
+
 include 'header.rpy'
 include 'body.rpy'

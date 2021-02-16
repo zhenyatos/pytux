@@ -3,7 +3,8 @@ from ply import lex
 # List of token names
 tokens = (
     'INCLUDE',
-    'STRING'
+    'STRING',
+    'NEWLINE'
 )
 
 # Simple regular expression rules
@@ -18,9 +19,11 @@ def t_STRING(t):
 
 
 # Tracking line numbers
-def t_newline(t):
+def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
+    t.value = '\n' * (len(t.value) + 1)
+    return t
 
 
 # A string containing ignored characters
@@ -29,7 +32,8 @@ t_ignore = ' \t'
 
 # Comments are also ignored
 def t_COMMENT(t):
-    r'\#.*'
+    r'\#.*\n+'
+    t.lexer.lineno += 1
     pass
 
 
