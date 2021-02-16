@@ -17,6 +17,11 @@ __commands = {
 
 
 def main():
+    """
+    Entry point of `pytux` program.
+
+    :return: return code of specified command.
+    """
     if os.name not in const.PATH_DIRS_LOG.keys():
         util.print_err_msg("unable to run on %s platform" % os.name)
         return -1
