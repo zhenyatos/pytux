@@ -42,6 +42,8 @@ def parse_args():
                                        metavar="command [-h] task [options ...]",
                                        dest="command")
 
+    subparsers.required = True
+
     __add_args_build(subparsers)
     __add_args_log(subparsers)
 

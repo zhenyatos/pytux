@@ -22,4 +22,3 @@ LOG_SEVERITY_LEVELS = OrderedDict([
     ("ERROR", logging.ERROR),
     ("CRITICAL", logging.CRITICAL)
 ])
-

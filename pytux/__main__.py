@@ -6,6 +6,7 @@ import pytux.const as const
 from pytux.build.__main__ import main as command_build
 from pytux.log.__main__ import main as command_log
 
+import os
 import sys
 
 __logger = None
@@ -16,6 +17,19 @@ __commands = {
 
 
 def main():
+    if os.name not in const.PATH_DIRS_LOG.keys():
+        util.print_err_msg("unable to run on %s platform" % os.name)
+        return -1
+
+    working_dirs = [
+        const.PATH_DIR_HOME,
+        const.PATH_DIRS_LOG[os.name]
+    ]
+    util.make_dirs(working_dirs)
+    if len(working_dirs) != 0:
+        util.print_err_msg("unable to make working dirs")
+        return -1
+
     try:
         const.LOG_FILE = open(const.PATH_FILE_LOG, "a")
     except EnvironmentError as err:
