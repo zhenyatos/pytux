@@ -1,0 +1,15 @@
+# Testing variable system
+
+e   = 'everybody'
+kno = 'shits'
+shi = 'fucked'
+fu  = 'knows'
+
+print e
+print fu
+print kno
+print shi
+
+fu = 'by SPT'
+
+print fu
