@@ -27,9 +27,7 @@ class VarSystem:
             if var_type != type:
                 raise ValueError("trying to assign value of type [{}] to the variable [{}] of type "
                                  "[{}]".format(type, name, var_type))
-            self.__variables[name][0] = value
-        else:
-            self.__variables[name] = (value, type)
+        self.__variables[name] = (value, type)
 
     """
     Gets variable value if variable with such identifier exists.

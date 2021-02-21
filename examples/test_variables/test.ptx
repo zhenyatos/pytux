@@ -1,7 +1,7 @@
 # Testing variable system
 
 e   = 'everybody'
-kno = 'shit'
+kno = 'shits'
 shi = 'fucked'
 fu  = 'knows'
 
@@ -9,3 +9,7 @@ print e
 print fu
 print kno
 print shi
+
+fu = 'by SPT'
+
+print fu
