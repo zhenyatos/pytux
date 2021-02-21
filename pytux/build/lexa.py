@@ -1,14 +1,30 @@
 from ply import lex
 
+# Reserved words
+reserved = {
+    'print': 'PRINT',
+    'include': 'INCLUDE'
+}
+
 # List of token names
 tokens = (
-    'INCLUDE',
+    'EQUALS',
+    'VARNAME',
+    'NEWLINE',
     'STRING',
-    'NEWLINE'
-)
+) + tuple(d for d in reserved.values())
 
 # Simple regular expression rules
-t_INCLUDE = r'include'
+t_EQUALS = r'='
+
+
+def t_ID(t):
+    r'[a-zA-Z$][a-zA-Z_0-9]*'
+    if t.value in reserved:         # Check for reserved words
+        t.type = reserved[t.value]
+    else:
+        t.type = 'VARNAME'
+    return t
 
 
 # Action regular expression rule
