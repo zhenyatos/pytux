@@ -1,7 +1,7 @@
 from ply import yacc
 from pytux.build.lexa import tokens, Lexa
 from pytux.build.varya import Varya, VarType
-from pytux.build.quiz import Quiz
+from pytux.build.quiz import Quiz, QuizError
 from os import path
 
 parsed_file_dir = ''
@@ -38,12 +38,28 @@ def p_print(p):
 
 
 # Quiz sentence
-def p_quiz(p):
-    'sentence : QUIZ STRING NEWLINE list END NEWLINE'
-    quiz = Quiz(p[2], p[1])
-    for entry in p[4]:
+def p_quiz_str(p):
+    'sentence : quiz_header list END NEWLINE'
+    quiz = Quiz(p[1][1], p[1][0])
+    for entry in p[2]:
         quiz.add_answer(entry[0], entry[1])
-    p[0] = quiz.generate_quiz()
+    p[0] = quiz.generate_quiz() + p[4]
+
+
+# Quiz header with string
+def p_quiz_str_header(p):
+    'quiz_header : QUIZ STRING NEWLINE'
+    p[0] = (p[1], p[2])
+
+
+# Quiz header with variable
+def p_quiz_var_header(p):
+    'quiz_header : QUIZ VARNAME NEWLINE'
+    type = Varya.get_type(p[2])
+    if type == VarType.STRING:
+        p[0] = (p[1], Varya.get_value(p[2]))
+    else:
+        raise ValueError(f"Variable {p[2]} should be of type {VarType.STRING} not {type}")
 
 
 # List
@@ -57,10 +73,20 @@ def p_list(p):
         p[0] = p[1]
 
 
-# List entry
-def p_list_entry(p):
+# List entry with string
+def p_list_entry_str(p):
     'list_entry : MARKER STRING NEWLINE'
     p[0] = (p[1], p[2])
+
+
+# List entry with variable
+def p_list_entry_var(p):
+    'list_entry : MARKER VARNAME NEWLINE'
+    type = Varya.get_type(p[2])
+    if type == VarType.STRING:
+        p[0] = (p[1], Varya.get_value(p[2]))
+    else:
+        raise ValueError(f"Variable {p[2]} should be of type {VarType.STRING} not {type}")
 
 
 # Error rule for syntax errors

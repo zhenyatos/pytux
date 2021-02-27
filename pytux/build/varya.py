@@ -20,7 +20,6 @@ class VarSystem:
     :param type: variable type
     :return: None.
     """
-
     def init_or_assign(self, name: str, value, type: VarType):
         if name in self.__variables:
             var_type = self.__variables[name][1]
@@ -34,10 +33,21 @@ class VarSystem:
     :param name: variable identifier 
     :return: variable value.
     """
-
     def get_value(self, name: str):
         if name in self.__variables:
             return self.__variables[name][0]
+        else:
+            return None
+
+    """
+    Gets variable type if variable with such identifier exists.
+
+    :param name: variable identifier 
+    :return: variable type.
+    """
+    def get_type(self, name: str):
+        if name in self.__variables:
+            return self.__variables[name][1]
         else:
             return None
 

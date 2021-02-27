@@ -1,5 +1,6 @@
 from random import shuffle
 
+
 class QuizError(Exception):
     def __str__(self):
         return f'Quiz error: {super().__str__()}'
