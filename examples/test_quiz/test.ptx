@@ -1,0 +1,7 @@
+# Testing quiz generation
+
+quiz 'Hello there?'
++ 'General Kenobi...'
+- 'Hello'
+- 'Test'
+end

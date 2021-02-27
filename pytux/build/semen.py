@@ -1,6 +1,7 @@
 from ply import yacc
 from pytux.build.lexa import tokens, Lexa
 from pytux.build.varya import Varya, VarType
+from pytux.build.quiz import Quiz
 from os import path
 
 parsed_file_dir = ''
@@ -34,6 +35,32 @@ def p_assign_string_variable(p):
 def p_print(p):
     'sentence : PRINT VARNAME NEWLINE'
     p[0] = Varya.get_value(p[2]) + '\n'
+
+
+# Quiz sentence
+def p_quiz(p):
+    'sentence : QUIZ STRING NEWLINE list END NEWLINE'
+    quiz = Quiz(p[2], p[1])
+    for entry in p[4]:
+        quiz.add_answer(entry[0], entry[1])
+    p[0] = quiz.generate_quiz()
+
+
+# List
+def p_list(p):
+    '''list : list list_entry
+                    | list_entry'''
+    if len(p) == 2:
+        p[0] = [p[1]]
+    else:
+        p[1].append(p[2])
+        p[0] = p[1]
+
+
+# List entry
+def p_list_entry(p):
+    'list_entry : MARKER STRING NEWLINE'
+    p[0] = (p[1], p[2])
 
 
 # Error rule for syntax errors

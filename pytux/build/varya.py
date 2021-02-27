@@ -25,8 +25,7 @@ class VarSystem:
         if name in self.__variables:
             var_type = self.__variables[name][1]
             if var_type != type:
-                raise ValueError("trying to assign value of type [{}] to the variable [{}] of type "
-                                 "[{}]".format(type, name, var_type))
+                raise ValueError(f"trying to assign value of type {type} to the variable {name} of type {var_type}")
         self.__variables[name] = (value, type)
 
     """

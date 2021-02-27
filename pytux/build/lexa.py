@@ -3,7 +3,9 @@ from ply import lex
 # Reserved words
 reserved = {
     'print': 'PRINT',
-    'include': 'INCLUDE'
+    'include': 'INCLUDE',
+    'quiz': 'QUIZ',
+    'end': 'END'
 }
 
 # List of token names
@@ -12,22 +14,26 @@ tokens = (
     'VARNAME',
     'NEWLINE',
     'STRING',
+    'MARKER',
 ) + tuple(d for d in reserved.values())
 
 # Simple regular expression rules
 t_EQUALS = r'='
+t_MARKER = r'[+-]'
 
 
 def t_ID(t):
     r'[a-zA-Z$][a-zA-Z_0-9]*'
     if t.value in reserved:         # Check for reserved words
         t.type = reserved[t.value]
+        if t.type == 'QUIZ':
+            t.value = t.lexer.lineno
     else:
         t.type = 'VARNAME'
     return t
 
 
-# Action regular expression rule
+# Action regular expression rules
 def t_STRING(t):
     r'\'(.+?)\''
     t.value = str(t.value).replace("'", '')
