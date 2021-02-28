@@ -1,8 +1,6 @@
 import pytux.log as log
 import pytux.util as util
 from pytux.build.semen import parse
-from pytux.build.quiz import QuizError
-from pytux.build.lexa import Lexa
 from os import path
 
 __logger = log.get_logger(__name__)
@@ -23,6 +21,7 @@ def main(argv):
             result = parse(argv.file)
             with open(result_file_name, "w") as result_file:
                 result_file.write(result)
+            print(f"Pytux successfully translated {source_file_name} to {result_file_name}")
         except Exception as err:
             __logger.error(log.get_err_tb(err))
             util.print_err_msg(err)

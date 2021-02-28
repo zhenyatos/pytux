@@ -4,6 +4,12 @@ from pytux.build.varya import Varya, VarType
 from pytux.build.quiz import Quiz, QuizError
 from os import path
 
+
+class SemenError(Exception):
+    def __str__(self):
+        return f'Syntax error: {super().__str__()}'
+
+
 parsed_file_dir = ''
 
 
@@ -91,7 +97,13 @@ def p_list_entry_var(p):
 
 # Error rule for syntax errors
 def p_error(p):
-    print("Syntax error in input!")
+    if p is None:
+        raise SemenError("Unexpected end of file")
+    else:
+        if p.type == 'NEWLINE':
+            raise SemenError(f"Unexpected line break on line {p.lineno}")
+        else:
+            raise SemenError(f"Unexpected token ({p.type}, {p.value}) on line {p.lineno}")
 
 
 start = 'program'
