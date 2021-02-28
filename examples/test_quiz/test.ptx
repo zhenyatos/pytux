@@ -1,0 +1,15 @@
+# Testing quiz generation
+
+quiz 'Hello there?'
++ 'General Kenobi...'
+- 'Hello'
+- 'Test'
+end
+
+kenobi_question = 'Hello there?'
+bad_answer = 'Hello'
+
+quiz kenobi_question
++ 'General Kenobi...'
+- bad_answer
+end
