@@ -47,13 +47,13 @@ def p_quiz_str(p):
 
 
 # Quiz header with string
-def p_quiz_str_header(p):
+def p_quiz_header_str(p):
     'quiz_header : QUIZ STRING NEWLINE'
     p[0] = (p[1], p[2])
 
 
 # Quiz header with variable
-def p_quiz_var_header(p):
+def p_quiz_header_var(p):
     'quiz_header : QUIZ VARNAME NEWLINE'
     type = Varya.get_type(p[2])
     if type == VarType.STRING:

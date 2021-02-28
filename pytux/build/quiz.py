@@ -11,8 +11,8 @@ class Quiz:
     """
     DEFAULT_CORRECT = "Yes, you are right!"
     DEFAULT_INCORRECT = "Nope, wrong answer..."
-    TAB = "    "
-    TAB2 = TAB + TAB
+    TAB = " " * 4
+    TAB2 = TAB * 2
 
     __counter = 0
 

@@ -23,7 +23,7 @@ t_MARKER = r'[+-]'
 
 
 def t_ID(t):
-    r'[a-zA-Z$][a-zA-Z_0-9]*'
+    r'[a-zA-Z_][a-zA-Z_0-9]*'
     if t.value in reserved:         # Check for reserved words
         t.type = reserved[t.value]
         if t.type == 'QUIZ':
