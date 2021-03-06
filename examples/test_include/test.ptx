@@ -1,4 +1,4 @@
 # Testing 'include' macro
 
-include 'header.rpy'
-include 'body.rpy'
+include 'anarcho.ptx'
+include 'taoism.ptx'

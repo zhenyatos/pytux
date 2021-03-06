@@ -44,7 +44,7 @@ def t_STRING(t):
 def t_NEWLINE(t):
     r'\n+'
     t.lexer.lineno += len(t.value)
-    t.value = '\n' * (len(t.value) + 1)
+    t.value = '\n'
     return t
 
 

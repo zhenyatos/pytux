@@ -11,6 +11,17 @@ class SemenError(Exception):
 
 
 parsed_file_dir = ''
+dependencies_stack = []
+
+
+def process_dependencies(file_name):
+    if file_name in dependencies_stack:
+        dependencies = ""
+        for name in dependencies_stack:
+            dependencies += f"{name} -> "
+        dependencies += file_name
+        raise SemenError(f"Recursive include: {dependencies}")
+    dependencies_stack.append(file_name)
 
 
 # Program
@@ -27,7 +38,11 @@ def p_program(p):
 def p_include_string(p):
     'sentence : INCLUDE STRING NEWLINE'
     with open(path.join(parsed_file_dir, p[2]), "r") as include_file:
-        p[0] = include_file.read() + p[3]
+        data = include_file.read()
+    process_dependencies(p[2])
+    result = Semen.parse(data, lexer=Lexa.clone())
+    dependencies_stack.pop()
+    p[0] = result
 
 
 # Variable initialization or assignment sentence
@@ -40,7 +55,7 @@ def p_assign_string_variable(p):
 # Print variable sentence
 def p_print(p):
     'sentence : PRINT VARNAME NEWLINE'
-    p[0] = Varya.get_value(p[2]) + '\n'
+    p[0] = Varya.get_value(p[2]) + p[3]
 
 
 # Quiz sentence
@@ -115,5 +130,6 @@ Semen = yacc.yacc(debug=False)
 def parse(file):
     global parsed_file_dir
     parsed_file_dir = path.dirname(path.abspath(file.name))
+    dependencies_stack.append(file.name)
     data = file.read()
     return Semen.parse(data)
