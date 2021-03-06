@@ -14,14 +14,20 @@ parsed_file_dir = ''
 dependencies_stack = []
 
 
-def process_dependencies(file_name):
-    if file_name in dependencies_stack:
+def process_dependencies(file_path):
+    """
+    Process file dependencies.
+
+    :param file_path: file relative path
+    :return: None.
+    """
+    if file_path in dependencies_stack:
         dependencies = ""
         for name in dependencies_stack:
             dependencies += f"{name} -> "
-        dependencies += file_name
+        dependencies += file_path
         raise SemenError(f"Recursive include: {dependencies}")
-    dependencies_stack.append(file_name)
+    dependencies_stack.append(file_path)
 
 
 # Program
@@ -128,6 +134,12 @@ Semen = yacc.yacc(debug=False)
 
 
 def parse(file):
+    """
+    Parses file, collects some important metainformation.
+
+    :param file: source file (S)
+    :return: result (R) of parsing.
+    """
     global parsed_file_dir
     parsed_file_dir = path.dirname(path.abspath(file.name))
     dependencies_stack.append(file.name)

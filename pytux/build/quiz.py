@@ -22,22 +22,22 @@ class Quiz:
         self.__lineno = lineno
         Quiz.__counter += 1
 
-    """
-    Add answer to quiz.
-    
-    :param marker: '+' if answer is correct, '-' if answer is incorrect
-    :param text: text of the answer 
-    """
     def add_answer(self, marker, text):
+        """
+        Add answer to quiz.
+
+        :param marker: '+' if answer is correct, '-' if answer is incorrect
+        :param text: text of the answer
+        """
         self.__answers.append({'marker': marker, 'text': text})
 
-    """
-    Quiz validation function: when there is more than one correct answer or no correct answers, or 
-    there is no incorrect answers, than some error will be raised.
-    
-    :return: None.
-    """
     def __validate_quiz(self):
+        """
+        Quiz validation function: when there is more than one correct answer or no correct answers, or
+        there is no incorrect answers, than some error will be raised.
+
+        :return: None.
+        """
         n_correct = 0
         n_incorrect = 0
         for answer in self.__answers:
@@ -51,19 +51,19 @@ class Quiz:
         if n_incorrect == 0:
             raise QuizError(f"There must be at least one answer marked with - in quiz on line {self.__lineno}")
 
-    """
-    Quiz generation.
-    
-    :return: Ren'Py code for quiz.
-    """
     def generate_quiz(self):
+        """
+        Quiz generation.
+
+        :return: Ren'Py code for quiz.
+        """
         # Checking answers and shuffling them randomly
         self.__validate_quiz()
         shuffle(self.__answers)
 
         result = ''
-        result += f"menu quiz_{self.__counter}:\n"          # Ren'Py menu statement
-        result += f"{Quiz.TAB}\"{self.__question}\"\n\n"    # question is placed right after
+        result += f"menu quiz_{self.__counter}:\n"  # Ren'Py menu statement
+        result += f"{Quiz.TAB}\"{self.__question}\"\n\n"  # question is placed right after
         for answer in self.__answers:
             result += f"{Quiz.TAB}\"{answer['text']}\":\n"
             if answer['marker'] == '+':
