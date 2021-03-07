@@ -1,0 +1,3 @@
+include 'anarcho.ptx'
+stuff = 'Taoism'
+print stuff
