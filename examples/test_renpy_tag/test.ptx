@@ -1,0 +1,9 @@
+# Testing Ren'Py tag
+
+<rpy>tr "How do I look?"</rpy>
+<rpy>
+vu "Like shit, boss."
+tr "Yo' mama."</rpy>
+<rpy>
+if 2 > 1:
+    jump terminator_is_coming </rpy>

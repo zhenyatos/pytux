@@ -64,6 +64,12 @@ def p_print(p):
     p[0] = Varya.get_value(p[2]) + p[3]
 
 
+# Ren'Py sentence
+def p_renpy(p):
+    'sentence : RENPY NEWLINE'
+    p[0] = p[1] + p[2]
+
+
 # Quiz sentence
 def p_quiz_str(p):
     'sentence : quiz_header list END NEWLINE'

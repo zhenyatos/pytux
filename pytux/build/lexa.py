@@ -15,6 +15,7 @@ tokens = (
     'NEWLINE',
     'STRING',
     'MARKER',
+    'RENPY',
 ) + tuple(d for d in reserved.values())
 
 # Simple regular expression rules
@@ -33,10 +34,19 @@ def t_ID(t):
     return t
 
 
-# Action regular expression rules
+# String regular expression, removes quotes
 def t_STRING(t):
     r'\'(.+?)\''
     t.value = str(t.value).replace("'", '')
+    return t
+
+
+# Ren'Py tag regular expression, removes tag
+def t_RENPY(t):
+    r'\<rpy\>[\S\s]*?\</rpy\>'
+    insides = str(t.value)
+    insides = (insides[5:])[:-6]
+    t.value = insides
     return t
 
 
