@@ -144,4 +144,4 @@ def parse(file):
     parsed_file_dir = path.dirname(path.abspath(file.name))
     dependencies_stack.append(file.name)
     data = file.read()
-    return Semen.parse(data)
+    return "label start\n" + Semen.parse(data)
