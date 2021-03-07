@@ -43,9 +43,9 @@ def t_STRING(t):
 
 # Ren'Py tag regular expression, removes tag
 def t_RENPY(t):
-    r'\<renpy\s[^\<\>]*\>'
+    r'\<rpy\>[\S\s]*?\</rpy\>'
     insides = str(t.value)
-    insides = (insides[7:])[:-1]
+    insides = (insides[5:])[:-6]
     t.value = insides
     return t
 
