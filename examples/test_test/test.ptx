@@ -6,7 +6,7 @@ quiz 'Uno?' to 'Numbers'
 - '3'
 end
 
-quiz 'Dos' to 'Numbers'
+quiz 'Dos?' to 'Numbers'
 + '2'
 - '1'
 - '3'
