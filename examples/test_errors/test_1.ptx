@@ -1,3 +1,2 @@
 # No newline at end of file
 smth = 'fail'
-print smth

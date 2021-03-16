@@ -59,10 +59,10 @@ def p_assign_string_variable(p):
     p[0] = ''
 
 
-# Print variable sentence
-def p_print(p):
-    'sentence : PRINT VARNAME NEWLINE'
-    p[0] = Varya.get_value(p[2]) + p[3]
+# Score sentence
+def p_score(p):
+    'sentence : SCORE STRING NEWLINE'
+    p[0] = Tescha.print_score(p[2]) + p[3]
 
 
 # Ren'Py sentence

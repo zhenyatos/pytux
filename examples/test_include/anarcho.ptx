@@ -1,2 +1,1 @@
-stuff = 'Anarcho'
-print stuff
+<rpy>"Anarcho"</rpy>
