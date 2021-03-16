@@ -1,2 +1,2 @@
-# An attempt to create variable with reserved name 'print'
-print = 'smth'
+# An attempt to create variable with reserved name 'end'
+end = 'smth'

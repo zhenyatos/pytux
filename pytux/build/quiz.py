@@ -1,4 +1,5 @@
 from random import shuffle
+from .tescha import Tescha
 
 
 class QuizError(Exception):
@@ -28,6 +29,7 @@ class Quiz:
 
         :param marker: '+' if answer is correct, '-' if answer is incorrect
         :param text: text of the answer
+        :return: None.
         """
         self.__answers.append({'marker': marker, 'text': text})
 
@@ -51,9 +53,9 @@ class Quiz:
         if n_incorrect == 0:
             raise QuizError(f"There must be at least one answer marked with - in quiz on line {self.__lineno}")
 
-    def generate_quiz(self):
+    def generate_lonely_quiz(self):
         """
-        Quiz generation.
+        Lonely quiz generation, without scoring.
 
         :return: Ren'Py code for quiz.
         """
@@ -67,6 +69,31 @@ class Quiz:
         for answer in self.__answers:
             result += f"{Quiz.TAB}\"{answer['text']}\":\n"
             if answer['marker'] == '+':
+                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_CORRECT}\"\n"
+            else:
+                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_INCORRECT}\"\n"
+
+        return result
+
+    def generate_test_quiz(self, test_name):
+        """
+        Test quiz generation, scoring added.
+
+        :return: Ren'Py code for quiz.
+        """
+        # Checking answers and shuffling them randomly
+        self.__validate_quiz()
+        shuffle(self.__answers)
+
+        Tescha.add_quiz(test_name) # this quiz is scored
+
+        result = ''
+        result += f"menu quiz_{self.__counter}:\n"  # Ren'Py menu statement
+        result += f"{Quiz.TAB}\"{self.__question}\"\n\n"  # question is placed right after
+        for answer in self.__answers:
+            result += f"{Quiz.TAB}\"{answer['text']}\":\n"
+            if answer['marker'] == '+':
+                result += f"{Quiz.TAB2}{Tescha.update_score(test_name)}" # update score if answer is correct
                 result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_CORRECT}\"\n"
             else:
                 result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_INCORRECT}\"\n"

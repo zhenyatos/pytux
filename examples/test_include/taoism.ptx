@@ -1,3 +1,2 @@
 include 'anarcho.ptx'
-stuff = 'Taoism'
-print stuff
+<rpy>"Taoism"</rpy>

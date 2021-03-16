@@ -2,10 +2,11 @@ from ply import lex
 
 # Reserved words
 reserved = {
-    'print': 'PRINT',
+    'score': 'SCORE',
     'include': 'INCLUDE',
     'quiz': 'QUIZ',
-    'end': 'END'
+    'end': 'END',
+    'to': 'TO'
 }
 
 # List of token names
