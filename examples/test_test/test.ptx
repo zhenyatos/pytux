@@ -1,0 +1,13 @@
+# Testing test with multiple quizzes generation
+
+quiz 'Uno?' to 'numbers'
++ '1'
+- '2'
+- '3'
+end
+
+quiz 'Dos' to 'numbers'
++ '2'
+- '1'
+- '3'
+end

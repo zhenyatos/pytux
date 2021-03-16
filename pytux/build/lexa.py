@@ -5,7 +5,8 @@ reserved = {
     'print': 'PRINT',
     'include': 'INCLUDE',
     'quiz': 'QUIZ',
-    'end': 'END'
+    'end': 'END',
+    'to': 'TO'
 }
 
 # List of token names

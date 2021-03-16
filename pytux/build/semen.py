@@ -1,8 +1,9 @@
 from ply import yacc
-from pytux.build.lexa import tokens, Lexa
-from pytux.build.varya import Varya, VarType
-from pytux.build.quiz import Quiz, QuizError
+from .lexa import tokens, Lexa
+from .varya import Varya, VarType
+from .quiz import Quiz, QuizError
 from os import path
+from .tescha import Tescha
 
 
 class SemenError(Exception):
@@ -76,21 +77,33 @@ def p_quiz_str(p):
     quiz = Quiz(p[1][1], p[1][0])
     for entry in p[2]:
         quiz.add_answer(entry[0], entry[1])
-    p[0] = quiz.generate_quiz() + p[4]
+    if p[1][2] is None:
+        p[0] = quiz.generate_lonely_quiz()
+    else:
+        p[0] = quiz.generate_test_quiz(p[1][2])
+    p[0] += p[4]
 
 
 # Quiz header with string
 def p_quiz_header_str(p):
-    'quiz_header : QUIZ STRING NEWLINE'
-    p[0] = (p[1], p[2])
+    '''quiz_header : QUIZ STRING NEWLINE
+                    | QUIZ STRING TO STRING NEWLINE'''
+    if len(p) == 6:
+        p[0] = (p[1], p[2], p[4])
+    else:
+        p[0] = (p[1], p[2], None)
 
 
 # Quiz header with variable
 def p_quiz_header_var(p):
-    'quiz_header : QUIZ VARNAME NEWLINE'
+    '''quiz_header : QUIZ VARNAME NEWLINE
+                    | QUIZ VARNAME TO STRING NEWLINE'''
     type = Varya.get_type(p[2])
+    test_name = None
+    if len(p) == 6:
+        test_name = p[4]
     if type == VarType.STRING:
-        p[0] = (p[1], Varya.get_value(p[2]))
+        p[0] = (p[1], Varya.get_value(p[2]), test_name)
     else:
         raise ValueError(f"Variable {p[2]} should be of type {VarType.STRING} not {type}")
 
@@ -150,4 +163,5 @@ def parse(file):
     parsed_file_dir = path.dirname(path.abspath(file.name))
     dependencies_stack.append(file.name)
     data = file.read()
-    return "label start:\n" + Semen.parse(data)
+    result = Semen.parse(data)
+    return "label start:\n" + Tescha.init_rpy_variables() + result
