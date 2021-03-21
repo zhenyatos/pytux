@@ -4,6 +4,7 @@ from .varya import Varya, VarType
 from .quiz import Quiz, QuizError
 from os import path
 from .tescha import Tescha
+from .. import const
 
 
 class SemenError(Exception):
@@ -13,6 +14,7 @@ class SemenError(Exception):
 
 parsed_file_dir = ''
 dependencies_stack = []
+config = None
 
 
 def process_dependencies(file_path):
@@ -75,6 +77,7 @@ def p_renpy(p):
 def p_quiz_str(p):
     'sentence : quiz_header list END NEWLINE'
     quiz = Quiz(p[1][1], p[1][0])
+    quiz.set_yes_no(config[const.CONFIG_KEY_QUIZ_YES], config[const.CONFIG_KEY_QUIZ_NO])
     for entry in p[2]:
         quiz.add_answer(entry[0], entry[1])
     if p[1][2] is None:
@@ -165,3 +168,15 @@ def parse(file):
     data = file.read()
     result = Semen.parse(data)
     return "label start:\n" + Tescha.init_rpy_variables() + result
+
+
+def set_config(l_config):
+    """
+    Set configuration list for Semen.
+
+    :param l_config: configuration list
+    :return: None.
+    """
+    global config
+    config = l_config
+    Tescha.set_score_sentence(config[const.CONFIG_KEY_QUIZ_SCORE])

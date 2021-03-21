@@ -1,6 +1,6 @@
 import os
 import sys
-import pytux.log as log
+import pytux.log.log as log
 
 __logger = log.get_logger(__name__)
 
@@ -22,7 +22,7 @@ def confirm(message, yes="yes", no="no"):
             return False
 
 
-def print_err_msg(msg):
+def print_err_msg(msg, hint=True):
     """
     Prints error message.
 
@@ -30,7 +30,8 @@ def print_err_msg(msg):
     :return: None.
     """
     print("ERROR: %s" % str(msg), file=sys.stderr)
-    print("------ try 'pytux log show' for details", file=sys.stderr)
+    if hint:
+        print("------ try 'pytux log show' for details", file=sys.stderr)
 
 
 def make_dirs(dir_paths):

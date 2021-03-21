@@ -1,6 +1,6 @@
 from random import shuffle
 from .tescha import Tescha
-
+from .. import const
 
 class QuizError(Exception):
     pass
@@ -10,8 +10,6 @@ class Quiz:
     """
     Class responsible for Ren'Py quiz generation
     """
-    DEFAULT_CORRECT = "Yes, you are right!"
-    DEFAULT_INCORRECT = "Nope, wrong answer..."
     TAB = " " * 4
     TAB2 = TAB * 2
 
@@ -21,6 +19,8 @@ class Quiz:
         self.__question = question
         self.__answers = []
         self.__lineno = lineno
+        self.yes = const.CONFIG_DEFAULT[const.CONFIG_KEY_QUIZ_YES]
+        self.no = const.CONFIG_DEFAULT[const.CONFIG_KEY_QUIZ_NO]
         Quiz.__counter += 1
 
     def add_answer(self, marker, text):
@@ -69,9 +69,9 @@ class Quiz:
         for answer in self.__answers:
             result += f"{Quiz.TAB}\"{answer['text']}\":\n"
             if answer['marker'] == '+':
-                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_CORRECT}\"\n"
+                result += f"{Quiz.TAB2}\"{self.yes}\"\n"
             else:
-                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_INCORRECT}\"\n"
+                result += f"{Quiz.TAB2}\"{self.no}\"\n"
 
         return result
 
@@ -94,8 +94,20 @@ class Quiz:
             result += f"{Quiz.TAB}\"{answer['text']}\":\n"
             if answer['marker'] == '+':
                 result += f"{Quiz.TAB2}{Tescha.update_score(test_name)}" # update score if answer is correct
-                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_CORRECT}\"\n"
+                result += f"{Quiz.TAB2}\"{self.yes}\"\n"
             else:
-                result += f"{Quiz.TAB2}\"{Quiz.DEFAULT_INCORRECT}\"\n"
+                result += f"{Quiz.TAB2}\"{self.no}\"\n"
 
         return result
+
+    def set_yes_no(self, yes, no):
+        """
+        Set response to correct/incorrect answer.
+
+        :param yes: if answer is correct
+        :param no: if answer is incorrect
+        :return: None.
+        """
+        self.yes = yes
+        self.no = no
+
