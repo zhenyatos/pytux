@@ -26,4 +26,4 @@ per task:\
 `pytux log clear`
 
 ## Documentation
-[PytuX DSL.pdf](https://github.com/via8/pytux/files/6095812/PytuX.DSL.pdf)
+[PytuX DSL.pdf](https://github.com/via8/pytux/files/6177341/PytuX_DSL.pdf)
