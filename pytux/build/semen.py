@@ -36,16 +36,19 @@ def process_dependencies(file_path):
 # Program
 def p_program(p):
     '''program : program sentence
+                | newline sentence
                 | sentence'''
     if len(p) == 2:
         p[0] = p[1]
+    elif p[1] == '\n':
+        p[0] = p[2]
     else:
         p[0] = p[1] + p[2]
 
 
 # Include sentence
 def p_include_string(p):
-    'sentence : INCLUDE STRING NEWLINE'
+    'sentence : INCLUDE STRING newline'
     with open(path.join(parsed_file_dir, p[2]), "r") as include_file:
         data = include_file.read()
     process_dependencies(p[2])
@@ -56,26 +59,26 @@ def p_include_string(p):
 
 # Variable initialization or assignment sentence
 def p_assign_string_variable(p):
-    'sentence : VARNAME EQUALS STRING NEWLINE'
+    'sentence : VARNAME EQUALS STRING newline'
     Varya.init_or_assign(p[1], p[3], VarType.STRING)
     p[0] = ''
 
 
 # Score sentence
 def p_score(p):
-    'sentence : SCORE STRING NEWLINE'
+    'sentence : SCORE STRING newline'
     p[0] = Tescha.print_score(p[2]) + p[3]
 
 
 # Ren'Py sentence
 def p_renpy(p):
-    'sentence : RENPY NEWLINE'
+    'sentence : RENPY newline'
     p[0] = p[1] + p[2]
 
 
 # Quiz sentence
 def p_quiz_str(p):
-    'sentence : quiz_header list END NEWLINE'
+    'sentence : quiz_header list END newline'
     quiz = Quiz(p[1][1], p[1][0])
     quiz.set_yes_no(config[const.CONFIG_KEY_QUIZ_YES], config[const.CONFIG_KEY_QUIZ_NO])
     for entry in p[2]:
@@ -89,8 +92,8 @@ def p_quiz_str(p):
 
 # Quiz header with string
 def p_quiz_header_str(p):
-    '''quiz_header : QUIZ STRING NEWLINE
-                    | QUIZ STRING TO STRING NEWLINE'''
+    '''quiz_header : QUIZ STRING newline
+                    | QUIZ STRING TO STRING newline'''
     if len(p) == 6:
         p[0] = (p[1], p[2], p[4])
     else:
@@ -99,8 +102,8 @@ def p_quiz_header_str(p):
 
 # Quiz header with variable
 def p_quiz_header_var(p):
-    '''quiz_header : QUIZ VARNAME NEWLINE
-                    | QUIZ VARNAME TO STRING NEWLINE'''
+    '''quiz_header : QUIZ VARNAME newline
+                    | QUIZ VARNAME TO STRING newline'''
     type = Varya.get_type(p[2])
     test_name = None
     if len(p) == 6:
@@ -124,18 +127,25 @@ def p_list(p):
 
 # List entry with string
 def p_list_entry_str(p):
-    'list_entry : MARKER STRING NEWLINE'
+    'list_entry : MARKER STRING newline'
     p[0] = (p[1], p[2])
 
 
 # List entry with variable
 def p_list_entry_var(p):
-    'list_entry : MARKER VARNAME NEWLINE'
+    'list_entry : MARKER VARNAME newline'
     type = Varya.get_type(p[2])
     if type == VarType.STRING:
         p[0] = (p[1], Varya.get_value(p[2]))
     else:
         raise ValueError(f"Variable {p[2]} should be of type {VarType.STRING} not {type}")
+
+
+# Rule to merge newlines
+def p_newline(p):
+    '''newline : newline NEWLINE
+                | NEWLINE'''
+    p[0] = '\n'
 
 
 # Error rule for syntax errors
