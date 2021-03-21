@@ -1,50 +1,33 @@
 import pytux.const as const
-
-import os
-import sys
-import logging
+import pytux.log.log as log
 
 
-def setup_logging(log_level):
+def show(argv):
     """
-    Sets up basic configs for logging module (via logging.basicConfig).
+    Entry point of `pytux log show` task.
+    Prints contents of log file.
 
-    :param log_level: level of logging.
-    :return: None.
+    :param argv: unused.
+    :return: None on success, str with error description on error.
     """
-    logging.basicConfig(stream=const.LOG_FILE,
-                        format=const.LOG_FORMAT,
-                        datefmt=const.LOG_FORMAT_ASCTIME,
-                        level=const.LOG_SEVERITY_LEVELS[log_level])
+    try:
+        with open(const.PATH_FILE_LOG, "r") as file:
+            print(file.read())
+    except EnvironmentError as err:
+        return log.get_err_tb(err)
+    return None
 
 
-def get_logger(name):
+def clear(argv):
     """
-    Gets logger for specified name.
+    Entry point of `pytux log clear` task.
+    Prints contents of log file.
 
-    :param name: logger name.
-    :return: logger.
+    :param argv: unused.
+    :return: None on success, str with error description on error.
     """
-    logger = logging.getLogger(name)
-    if not logger.hasHandlers():
-        logger.addHandler(logging.NullHandler())
-    return logger
-
-
-def get_err_tb(err):
-    """
-    Makes system call to gather details about thrown
-    exception's traceback (sys.exc_info()).
-
-    :param err: caught exception.
-    :return: str representation of error type,
-    file and line it was thrown from, error text itself.
-    """
-    info = sys.exc_info()
-    name = info[0].__name__
-    tb_frame = info[2]
-    while tb_frame.tb_next is not None:
-        tb_frame = tb_frame.tb_next
-    file = os.path.basename(tb_frame.tb_frame.f_code.co_filename)
-    line = tb_frame.tb_lineno
-    return "%s at [%s:%d] %s" % (name, file, line, str(err))
+    try:
+        with open(const.PATH_FILE_LOG, "w"): pass
+    except EnvironmentError as err:
+        return log.get_err_tb(err)
+    return None

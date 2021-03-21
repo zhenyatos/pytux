@@ -1,4 +1,4 @@
-import pytux.log as log
+import pytux.log.log as log
 import pytux.util as util
 from pytux.build.semen import parse
 from os import path
@@ -13,7 +13,6 @@ def main(argv):
     :param argv: command line arguments passed to tasks.
     :return: 0 on success, -1 on error.
     """
-    
     if argv.file is not None:
         source_file_name = argv.file.name
         result_file_name = path.splitext(source_file_name)[0] + ".rpy"
