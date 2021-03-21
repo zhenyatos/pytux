@@ -62,12 +62,8 @@ def t_NEWLINE(t):
 # A string containing ignored characters
 t_ignore = ' \t'
 
-
 # Comments are also ignored
-def t_COMMENT(t):
-    r'\#.*\n+'
-    t.lexer.lineno += 1
-    pass
+t_ignore_comments = r'\#.*'
 
 
 # Error handling rule

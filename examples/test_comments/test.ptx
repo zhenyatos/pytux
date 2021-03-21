@@ -1,0 +1,13 @@
+# Testing new comment system
+
+<rpy>"Smth"</rpy> # Ren'Py insertion 1
+
+# Ren'Py insertion 2
+<rpy>"Smth"</rpy>
+
+smth = 'Smth' # Assigning variable
+
+quiz 'Smth?'    # Quiz header
++ 'SMTH'        # correct answer
+- 'smth'        # incorrect answer
+end
