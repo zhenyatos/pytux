@@ -24,7 +24,7 @@ CONFIG_DEFAULT = {
 	CONFIG_KEY_LOG_LEVEL: "DEBUG",
 	CONFIG_KEY_QUIZ_YES: "Yes, you are right!",
 	CONFIG_KEY_QUIZ_NO: "Nope, wrong answer...",
-	CONFIG_KEY_QUIZ_SCORE: "%s test: you have obtained [score_%d] out of %d points.",
+	CONFIG_KEY_QUIZ_SCORE: "%s test: you have obtained [%s] out of %d points.",
 }
 
 # LOG

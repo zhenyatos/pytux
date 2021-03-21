@@ -1,3 +1,5 @@
+from .. import const
+
 class ScorerError(Exception):
     pass
 
@@ -8,6 +10,7 @@ class Scorer:
     SCORE_PREFIX = "score_"
     TAB = " " * 4
 
+    __score_sentence = const.CONFIG_DEFAULT[const.CONFIG_KEY_QUIZ_SCORE]
     __n_quizzes_in_test = {}
     __test_index = {}
     __counter = 0
@@ -66,7 +69,16 @@ class Scorer:
         """
         if test_name not in self.__test_index.keys():
             raise ScorerError(f"There is no such test {test_name}")
-        return f"\"{test_name} test: you have obtained [{self.__var(test_name)}] out of {self.__n_quizzes_in_test[test_name]} points.\""
+        return self.__score_sentence % (test_name, self.__var(test_name), self.__n_quizzes_in_test[test_name])
+
+    def set_score_sentence(self, score_sentence):
+        """
+        Set score sentence for printing score.
+
+        :param score_sentence: score sentence, format (%s, %s, %d)
+        :return: None.
+        """
+        self.__score_sentence = score_sentence
 
 
 Tescha = Scorer()
