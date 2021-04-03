@@ -69,7 +69,7 @@ class Scorer:
         """
         if test_name not in self.__test_index.keys():
             raise ScorerError(f"There is no such test {test_name}")
-        return self.__score_sentence % (test_name, self.__var(test_name), self.__n_quizzes_in_test[test_name])
+        return f"\"{self.__score_sentence % (test_name, self.__var(test_name), self.__n_quizzes_in_test[test_name])}\""
 
     def set_score_sentence(self, score_sentence):
         """
